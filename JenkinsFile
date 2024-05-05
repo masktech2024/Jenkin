@@ -39,5 +39,16 @@ pipeline {
                 }
             }
         }
+
+        stage('Unit Test') {
+            steps {
+                // Create a directory for the Git repository
+                dir('MaskTradingService') {
+                    // Execute Maven build commands (e.g., mvn clean install)
+                    sh 'mvn test'
+
+                }
+            }
+        }
     }
 }
