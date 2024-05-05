@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clean Up') {
+            steps {
+                // Delete workspace before starting the build
+                deleteDir()
+            }
+        }
+
+        stage('Check Maven Version') {
+            steps {
+                // Execute 'mvn --version' command to check Maven version
+                sh 'mvn --version'
+            }
+        }
+
+        stage('Checkout') {
+            steps {
+                // Create a directory for the Git repository
+                dir('MaskTradingService') {
+                    // Checkout Git repository using specific credentials
+                    git branch: 'main',
+                        credentialsId: 'JenkinCred',
+                        url: 'https://github.com/masktech2024/MaskTradingService.git'
+
+                }
+            }
+        }
+
+		stage('Build') {
+            steps {
+                // Create a directory for the Git repository
+                dir('MaskTradingService') {
+                    // Execute Maven build commands (e.g., mvn clean install)
+                    sh 'mvn clean install'
+
+                }
+            }
+        }
+    }
+}
