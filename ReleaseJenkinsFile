@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'USERNAME', defaultValue: 'admin', description: 'Enter your username')
+        booleanParam(name: 'ENABLE_DEBUG', defaultValue: true, description: 'Enable debug mode')
+        choice(name: 'ENVIRONMENT', choices: ['dev', 'test', 'prod'], description: 'Select environment')
+        password(name: 'SECRET_KEY', defaultValue: '', description: 'Enter secret key')
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                echo "Building on ${params.ENVIRONMENT} environment"
+                echo "Username: ${params.USERNAME}"
+                echo "Debug mode enabled: ${params.ENABLE_DEBUG}"
+                echo "Debug mode enabled: ${params.SECRET_KEY}"
+            }
+        }
+    }
+}
